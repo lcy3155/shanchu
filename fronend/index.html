@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="../../js/jquery-1.11.3.js"></script>
+    <!--<script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.js"></script>-->
+    <style>
+        .box{
+            width: 400px;
+            border: 1px solid #111;
+            padding-left: 25px;
+        }
+        .box p{
+            width: 300px;
+            line-height: 30px;
+        }
+        .box p span{
+            float: right;
+            cursor: pointer;
+            padding: 0 10px;
+        }
+        .box p span:hover{
+            color: #c7532a;
+        }
+    </style>
+</head>
+<body>
+<div class="box"></div>
+<script>
+
+    $(function(){
+        $.ajax({
+            url:"http://localhost:3000/item/list",
+            type:"GET",
+            success:function(e){
+                for(var i in e){
+                    $(".box").append("<p>"+e[i].name+"<span date-id='"+e[i].id+"'>X</span></p>")
+                }
+            }
+
+        })
+        $(document).on('click','span',function(){
+            var id = $(this).attr('date-id')
+            console.log(id)
+            $.ajax({
+                url:"http://localhost:3000/item/delete",
+                type:"POST",
+                data:{
+                    abc:id
+                },
+                success:function(e){
+
+                }
+            })
+            $(this).parent().remove()
+        })
+    })
+</script>
+
+</body>
+</html>
